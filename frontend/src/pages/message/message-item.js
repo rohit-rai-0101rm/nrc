@@ -1,15 +1,28 @@
 import { useEffect } from "react";
-import { Col, Card, Typography, message } from "antd";
+import { Col, Card, Typography,message } from "antd";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { useDeleteMessageMutation } from "../../services/messagesApi";
 import { useHistory } from "react-router-dom";
-import { createStore } from "@reduxjs/toolkit";
 
 const key = "deletable";
 
 const { Title, Paragraph } = Typography;
 const MessageItem = ({post}) => {
   const history=useHistory()
-const{creator,message,title,_id:id}=post
+  const [deleteMessage, { isLoading, isSuccess }] = useDeleteMessageMutation();
+
+const{creator,message:m,title,_id:id}=post;
+
+useEffect(() => {
+  if (isLoading) {
+    message.loading({ content: "deleting...", key });
+  }
+  if (isSuccess) {
+    message.success({ content: "deleted successfully", key});
+    window.location.reload()
+  }
+}, [isLoading, isSuccess]);
+
 
   return (
     <Col span={6} >
@@ -28,12 +41,12 @@ const{creator,message,title,_id:id}=post
             onClick={() => history.push(`/messages/edit/${id}`)}
 
           />,
-          <DeleteOutlined key="setting"  />,
+          <DeleteOutlined onClick={()=>{deleteMessage(id)}} key="setting"  />,
         ]}
       >
         <div className="student-info">
           <Title level={5}>{title}</Title>
-          <Paragraph>{message}</Paragraph>
+          <Paragraph>{m}</Paragraph>
           <Paragraph>{creator}</Paragraph>
           <Paragraph>{id}</Paragraph>
 

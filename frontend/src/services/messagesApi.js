@@ -24,7 +24,7 @@ export const messagesApi = createApi({
     }),
     updateMessage: builder.mutation({
       query: ({ id, ...Message }) => ({
-        url: `messages/${id}`,
+        url: `posts/${id}`,
         method: "PUT",
         body: Message,
       }),
@@ -32,7 +32,7 @@ export const messagesApi = createApi({
     }),
     deleteMessage: builder.mutation({
       query: (id) => ({
-        url: `messages/${id}`,
+        url: `posts/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Message"],
