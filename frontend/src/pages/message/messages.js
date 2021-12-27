@@ -15,7 +15,7 @@ const posts=data?.Messages
         </div>
       ) : (
         <Row gutter={[20, 20]}>
-          {posts.map((post) => (
+          {posts?.map((post) => (
             <MessageItem key={post.id} post={post} />
           ))}
         </Row>

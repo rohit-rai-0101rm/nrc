@@ -20,11 +20,13 @@ const{creator,message,title,_id:id}=post
         actions={[
           <EyeOutlined
             key="view"
-            onClick={() => history.push(`/students/${id}`)}
+            onClick={() => history.push(`/messages/${id}`)}
 
           />,
           <EditOutlined
             key="edit"
+            onClick={() => history.push(`/messages/edit/${id}`)}
+
           />,
           <DeleteOutlined key="setting"  />,
         ]}

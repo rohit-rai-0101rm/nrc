@@ -28,8 +28,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={Messages} />
             <Route exact path="/students/add" component={AddMessage} />
-            <Route exact path="/students/:id" component={Student} />
-            <Route exact path="/students/edit/:id" component={EditMessage} />
+            <Route exact path="/messages/:id" component={Student} />
+            <Route exact path="/messages/edit/:id" component={EditMessage} />
           </Switch>
         </Content>
       </Layout>

@@ -14,7 +14,7 @@ const messageSchema = mongoose.Schema({
   message: {
     type: String,
     required: [true, "Please Enter Your message"],
-    minLength: [8, "Password should be greater than 8 characters"],
+    minLength: [8, "Message should be greater than 8 characters"],
   },
   createdAt: {
     type: Date,

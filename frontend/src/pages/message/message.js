@@ -29,7 +29,7 @@ const Message = () => {
               <Descriptions.Item label="message">
                 {post.message}
               </Descriptions.Item>
-              <Descriptions.Item style={{color:"blue"}} label="created">
+              <Descriptions.Item  label="created">
                 {moment(post.createdAt).startOf("ss").fromNow()}{" "}
               </Descriptions.Item>
             </Descriptions>
