@@ -10,6 +10,7 @@ export const getPosts = catchAsyncErr(async (req, res) => {
   
   const Messages = await Message.find();
   res.status(200).json({
+    success:true,
     Messages,
   });
 });
@@ -40,16 +41,47 @@ export const createPost = catchAsyncErr(async (req, res) => {
     newMessage,
   });
 });
-export const getPost = async (req, res) => { 
+export const getPost = catchAsyncErr(async (req, res) => { 
   const { id } = req.params;
 
-  try {
+  
       const post = await Message.findById(id);
-      
-      res.status(200).json(post);
-  } catch (error) {
-      res.status(404).json({ message: error.message });
-  }
-}
+      if(!post){
+        return res.status(500).json({
+            success:false,
+            message:"post not found"
+        })
+    }
+      res.status(200).json({
+        success:true,
+        
+        post});
+  
+})
 
-export default router;
+export const updatePost = catchAsyncErr(async (req, res) => {
+  const { id } = req.params;
+  const { title, message, creator } = req.body;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+  const updatedPost = { creator, title, message, _id: id };
+
+  await Message.findByIdAndUpdate(id, updatedPost, { new: true });
+
+  res.json(updatedPost);
+})
+export const deletePost = catchAsyncErr(async (req, res) => {
+  const { id } = req.params;
+
+const message=await Message.findById(id)
+if(!message){
+  return next(new ErrorHandler(("Product not found", 404)))
+
+}
+await message.remove()
+res.status(200).json({
+  success:true,
+  message:"message deleted successfully"
+})
+})
