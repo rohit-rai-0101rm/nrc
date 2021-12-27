@@ -20,6 +20,7 @@ const messageSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+
 });
 
 var Message = mongoose.model("Message", messageSchema);
