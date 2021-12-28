@@ -6,6 +6,7 @@ const { Title, Paragraph } = Typography;
 
 const Messages = () => {
   const {data,isFetching,isError}=useGetMessagesQuery()
+  console.log(data?.Messages)
 const posts=data?.Messages
   return (
     <>

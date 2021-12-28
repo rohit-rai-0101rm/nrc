@@ -23,8 +23,8 @@ export const messagesApi = createApi({
 
     }),
     updateMessage: builder.mutation({
-      query: ({ id, ...Message }) => ({
-        url: `posts/${id}`,
+      query: ({ _id, ...Message }) => ({
+        url: `posts/${_id}`,
         method: "PUT",
         body: Message,
       }),

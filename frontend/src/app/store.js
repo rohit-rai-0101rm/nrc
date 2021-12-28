@@ -4,5 +4,7 @@ import { messagesApi } from '../services/messagesApi';
 export const store = configureStore({
   reducer: {
     [messagesApi.reducerPath]:messagesApi.reducer,
+
+
   },
 });
