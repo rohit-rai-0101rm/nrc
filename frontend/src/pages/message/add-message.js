@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import { useAddMessageMutation } from "../../services/messagesApi";
 import { Input, Row, Col, Button, Card,message } from "antd";
-const key="add_student"
+const key="add_message"
 const AddMessage = ({history}) => {
   const [addMessage, { isLoading, isSuccess }] = useAddMessageMutation();
 
@@ -31,10 +31,10 @@ const handleSubmit = async (e) => {
 };
 useEffect(() => {
   if(isLoading){
-    message.loading({content:"creating new student...",key})
+    message.loading({content:"creating new message...",key})
   }
   if(isSuccess){
-    message.success({content:"creating student successfully...",key,duration:3})
+    message.success({content:"creating student message...",key,duration:3})
   }
  
 }, [isLoading,isSuccess])

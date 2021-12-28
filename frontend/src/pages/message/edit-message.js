@@ -1,34 +1,37 @@
 import { useState, useEffect } from "react";
 import { Input, Row, Col, Button, Card, message } from "antd";
+import { useParams } from "react-router-dom";
+
 import {
   useGetMessagesQuery,
   useUpdateMessageMutation,
 } from "../../services/messagesApi";
-import { useParams } from "react-router-dom";
 import ColumnGroup from "antd/lib/table/ColumnGroup";
 
 const key = "updatable";
-
 const EditMessage = ({ history, match }) => {
+  const{id}=useParams()
+
   const [item, setItem] = useState({
     title: "",
     creator: "",
     message: "",
+    id
   });
   const [updateMessage, { isLoading, isSuccess }] = useUpdateMessageMutation();
 
-  const { data: studentData } = useGetMessagesQuery(undefined, {
+  const { data: messageData } = useGetMessagesQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      data: data?.Messages?.find((el) => el._id == match.params.id),
+      data: data?.Messages?.find((el) => el._id == id),
     }),
   });
   useEffect(() => {
     if (isLoading) {
-      message.loading({ content: "updating student...", key });
+      message.loading({ content: "updating message...", key });
     }
     if (isSuccess) {
       message.success({
-        content: "student updated successfully",
+        content: "message updated successfully",
         key,
         duration: 3,
       });
@@ -36,14 +39,16 @@ const EditMessage = ({ history, match }) => {
   }, [isLoading, isSuccess]);
 
   useEffect(() => {
-    if (studentData) {
-      setItem(studentData);
+    if (messageData) {
+      setItem(messageData);
     }
-  }, [studentData]);
+  }, [messageData]);
   const handleChange = (e) =>
     setItem({ ...item, [e.target.name]: e.target.value });
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(item._id)
+
     await updateMessage(item);
     // after submit data
     setItem({
@@ -52,11 +57,12 @@ const EditMessage = ({ history, match }) => {
       message: "",
     });
     history.push("/")
+    window.location.reload(true);
   };
 console.log(item)
   return (
     <form onSubmit={handleSubmit}>
-      <Card title="Edit a new student">
+      <Card title="Edit a new message">
         <Row gutter={[0, 20]}>
           <Col span={24}>
             <Input

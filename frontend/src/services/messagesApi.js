@@ -23,10 +23,11 @@ export const messagesApi = createApi({
 
     }),
     updateMessage: builder.mutation({
-      query: ({ _id, ...Message }) => ({
-        url: `posts/${_id}`,
+      query: ({ _id:id, ...message }) => ({
+        url: `posts/${id}`,
+      
         method: "PUT",
-        body: Message,
+        body: message,
       }),
       invalidatesTags: ["Message"],
     }),
